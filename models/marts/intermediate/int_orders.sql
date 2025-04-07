@@ -7,7 +7,6 @@ with orders as
  
     , payments as (
         select * from {{ref("stg_stripe__payments")}}
-        where payment_status != 'fail'
 
     ),
 
@@ -16,7 +15,7 @@ with orders as
         select 
             order_id,
             payment_status,
-            sum(payment_amount) as order_value_dollars
+            sum(payment_amount/100) as order_value_dollars
             
         from payments
         group by order_id, payment_status     
@@ -28,4 +27,5 @@ with orders as
     , order_totals.order_value_dollars
     from orders 
     left join order_totals on orders.order_id = order_totals.order_id
+    where payment_status != 'fail'
 

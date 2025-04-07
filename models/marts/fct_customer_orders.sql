@@ -99,24 +99,22 @@ with orders as
 -- final CTE
 , final as (
 select 
-    orders.order_id,
-    orders.customer_id,
+    customer_orders_avg.order_id,
+    customer_orders_avg.customer_id,
     customers.surname,
     customers.givenname,
     first_order_date,
     order_count,
     total_lifetime_value,
-    orders.order_value_dollars,
+    customer_orders_avg.order_value_dollars,
     avg_non_returned_order_value,
-    orders.order_status,
-    orders.payment_status
-from   orders
+    customer_orders_avg.order_status,
+    customer_orders_avg.payment_status
+from   customer_orders_avg
 
 join   customers
-on orders.customer_id = customers.customer_id
+on customer_orders_avg.customer_id = customers.customer_id
 
-join   customer_orders_avg
-on orders.customer_id = customer_orders_avg.customer_id
 
 )
 -- simple select statement
