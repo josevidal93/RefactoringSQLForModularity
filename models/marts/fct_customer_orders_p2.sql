@@ -1,26 +1,39 @@
-WITH paid_orders as (select Orders.ID as order_id,
-        Orders.USER_ID    as customer_id,
+WITH 
+orders as (
+    select * from {{ ref('stg_jaffle_shop__orders')}}
+)
+, customers as (
+    select * from {{ ref('stg_jaffle_shop__customers')}}
+
+)
+, payment as (
+    select * from {{ ref('stg_stripe__payments')}}
+    
+)
+
+,paid_orders as (select Orders.order_id ,
+        Orders.customer_id,
         Orders.ORDER_DATE AS order_placed_at,
-            Orders.STATUS AS order_status,
+            Orders.order_status,
         p.total_amount_paid,
         p.payment_finalized_date,
-        C.FIRST_NAME    as customer_first_name,
-            C.LAST_NAME as customer_last_name
-    FROM raw.jaffle_shop.orders as Orders
-    left join (select ORDERID as order_id, max(payment_date) as payment_finalized_date, sum(AMOUNT) / 100.0 as total_amount_paid
-from raw.stripe.payment
-where STATUS <> 'fail'
-group by 1) p ON orders.ID = p.order_id
-left join raw.jaffle_shop.customers C on orders.USER_ID = C.ID ),
+        C.givenname,
+            C.surname
+    FROM orders as Orders
+    left join (select ORDER_ID , max(payment_date) as payment_finalized_date, sum(payment_amount) / 100.0 as total_amount_paid
+from payment
+where payment_status <> 'fail'
+group by 1) p ON orders.order_id = p.order_id
+left join customers C on orders.customer_id = C.customer_id ),
 
 customer_orders 
-    as (select C.ID as customer_id
+    as (select C.customer_id
         , min(ORDER_DATE) as first_order_date
         , max(ORDER_DATE) as most_recent_order_date
-        , count(ORDERS.ID) AS number_of_orders
-    from raw.jaffle_shop.customers C 
-    left join raw.jaffle_shop.orders as Orders
-    on orders.USER_ID = C.ID 
+        , count(ORDERS.order_id) AS number_of_orders
+    from customers C 
+    left join orders as Orders
+    on orders.customer_id = C.customer_id 
     group by 1)
 
 select
