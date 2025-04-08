@@ -3,7 +3,7 @@ with  source as (
     select  id as payment_id,
             orderid as order_id,
             status as payment_status,
-            amount as payment_amount,
+            {{ cent_to_dollar('amount',5) }} as payment_amount,
             payment_date,
             payment_method
 
