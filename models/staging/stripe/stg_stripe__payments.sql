@@ -8,6 +8,7 @@ with  source as (
             payment_method
 
     from {{ source('stripe', 'payment') }}
+    {{ limit_data_in_dev('payment_date',30,'2018-04-09T00:00:00') }}
 
 )
 , transform as (

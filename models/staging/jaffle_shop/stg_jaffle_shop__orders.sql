@@ -6,6 +6,8 @@ with  source as (
         user_id as customer_id
         , order_date
     from {{ source('jaffle_shop', 'orders') }}
+    {{ limit_data_in_dev('order_date',30,'2018-04-09T00:00:00') }}
+
 
 )
 , transform as (
