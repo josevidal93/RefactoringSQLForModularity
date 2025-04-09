@@ -5,6 +5,12 @@ sources:
     database: raw
     tables:
       - name: events
+      - name: mock_orders
+        columns:
+          - name: order_id
+            tests:
+              - not_null
+              - unique
 models:
   - name: stg_snowplow_events
     description: Fuente de datos de eventos webs.

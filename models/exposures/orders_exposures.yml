@@ -1,0 +1,12 @@
+exposures:
+  - name: order_data
+    label: order_data
+    type: notebook
+    maturity: high
+    url: https://tinyurl.com/jaffle-shop-reporting
+    description: "Exposure for orders data"
+    depends_on:
+      - ref('fct_customer_orders')
+    owner:
+      name: Michael McData
+      email: data@orders.com
