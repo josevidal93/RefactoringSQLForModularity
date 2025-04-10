@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: fct_customer_orders
+    description: >
+      Tabla de hechos que contiene información enriquecida de pedidos por cliente,
+      incluyendo fechas de primera compra, valor total, número de pedidos y datos de clientes.
+    columns:
+      - name: order_id
+        description: ID único del pedido.
+      - name: customer_id
+        description: Identificador único del cliente.
+      - name: surname
+        description: Apellido del cliente.
+      - name: givenname
+        description: Nombre de pila del cliente.
+      - name: first_order_date
+        description: Fecha del primer pedido del cliente.
+      - name: order_count
+        description: Número total de pedidos realizados por el cliente.
+      - name: total_lifetime_value
+        description: Suma de los valores de todos los pedidos no devueltos del cliente.
+      - name: order_value_dollars
+        description: Valor del pedido en dólares.
+      - name: avg_non_returned_order_value
+        description: Promedio de valor por pedido no devuelto del cliente.
+      - name: order_status
+        description: Estado del pedido (ej. completado, devuelto).
+      - name: payment_status
+        description: Estado del pago asociado al pedido.

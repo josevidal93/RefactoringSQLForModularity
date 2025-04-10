@@ -43,58 +43,7 @@ with orders as
      ,customer_orders_avg as (
 
         select *,nvl2(orders_valid_date,total_lifetime_value/order_count,null) as avg_non_returned_order_value from customer_orders
-    )/*,
-
-    customer_order_history as (
-
-    select 
-        customers.customer_id,
-        customers.full_name,
-        customers.surname,
-        customers.givenname,
-        min(order_date) as first_order_date,
-        min(orders_valid_date) as first_non_returned_order_date,
-        max(orders_valid_date) as most_recent_non_returned_order_date,
-        COALESCE(
-            max(user_order_seq),0
-            ) as order_count,
-        COALESCE(
-            count(
-                case 
-                    when  non_returned then 1 
-                end
-            )
-        ,0) as non_returned_order_count,
-        sum(
-            case 
-                when  orders_valid_date is not null then ROUND(payments.payment_amount/100.0,2) 
-                    else 0 
-            end) as total_lifetime_value,
-        sum(
-            case 
-                when  orders_valid_date is not null then ROUND(payments.payment_amount/100.0,2) 
-                    else 0 end)
-            /NULLIF(
-                    count(
-                        case 
-                            when  orders_valid_date is not null then 1 end
-                        )
-                ,0) as avg_non_returned_order_value,
-        array_agg(distinct customers.customer_id) as order_ids
-
-    from orders
-
-    join customers
-    on orders.customer_id = customers.customer_id
-
-    left outer join  payments
-    on orders.order_id = payments.order_id
-
-
-    group by  customers.customer_id, customers.full_name, customers.surname, customers.givenname
-
-
-)*/
+    )
 
 -- final CTE
 , final as (

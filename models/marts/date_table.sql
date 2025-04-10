@@ -1,13 +1,8 @@
+{% set start_date = "'2020-01-01'" %}
+{% set end_date = "dateadd(day, 1, current_date)" %}
 
-
-{% set start_date = '01/01/2020' %}
-{% set end_date   = current_timestamp %}
-
-
- {{  date_spine(
-    "day",
-    "to_date('01/01/2025', 'mm/dd/yyyy')",
-    "dateadd('week', 1, current_date)"
-)  }} 
-
-
+{{ date_spine(
+    datepart="day",
+    start_date=start_date,
+    end_date=end_date
+) }}
