@@ -37,7 +37,7 @@ models:
         description: Promedio de valor por pedido no devuelto del cliente.
         meta:
           metrics:
-            - name: avg_non_returned_order_value
+            avg_non_returned_order_value:
               type: average
               description: Promedio de valor por pedido no devuelto del cliente.
       - name: order_status
