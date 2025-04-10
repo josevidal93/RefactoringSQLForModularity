@@ -7,6 +7,8 @@ exposures:
     description: "Exposure for orders data"
     depends_on:
       - ref('fct_customer_orders')
+      - metrics('first_order_date')
     owner:
       name: Michael McData
       email: data@orders.com
+    

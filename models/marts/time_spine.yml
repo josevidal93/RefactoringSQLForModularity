@@ -1,0 +1,12 @@
+semantic_models:
+  - name: time_spine
+    model: ref('date_table')
+    description: Tabla de fechas con granularidad primaria
+    entities:
+      - name: date_day
+        type: primary
+    dimensions:
+      - name: date_day
+        type: time
+        type_params:
+          time_granularity: day
