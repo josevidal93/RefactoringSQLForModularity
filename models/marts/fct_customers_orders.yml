@@ -8,6 +8,11 @@ models:
     columns:
       - name: order_id
         description: ID único del pedido.
+        meta:
+          metric:
+            type: count
+            description: Total orders count
+            sql: order_id  # Define como la columna que se va a agregar      - name: order_value_dollars
       - name: customer_id
         description: Identificador único del cliente.
       - name: surname
@@ -18,9 +23,13 @@ models:
         description: Fecha del primer pedido del cliente.
       - name: order_count
         description: Número total de pedidos realizados por el cliente.
-      - name: total_lifetime_value
-        description: Suma de los valores de todos los pedidos no devueltos del cliente.
       - name: order_value_dollars
+        description: Total order value in dollars
+        meta:
+          metric:
+            type: sum
+            description: Total order amount across all orders
+            sql: order_value_dollars  # Define como la columna que se va a agregar      - name: order_value_dollars
         description: Valor del pedido en dólares.
       - name: avg_non_returned_order_value
         description: Promedio de valor por pedido no devuelto del cliente.
@@ -28,3 +37,25 @@ models:
         description: Estado del pedido (ej. completado, devuelto).
       - name: payment_status
         description: Estado del pago asociado al pedido.
+
+
+
+version: 2
+
+models:
+  - name: fct_orders
+    description: Fact table with customer orders and sales values
+    columns:
+      - name: order_id
+        description: Unique identifier for the order
+        meta:
+          metric: false  # No es una métrica
+      
+      - name: customer_id
+        description: Unique identifier for the customer
+        meta:
+          metric: false  # No es una métrica
+      - name: order_date
+        description: The date the order was placed
+        meta:
+          metric: false  # No es una métrica
