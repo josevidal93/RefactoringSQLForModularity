@@ -24,3 +24,16 @@ semantic_models:
       - name: order_count
         description: "Número total de pedidos"
         agg: sum
+metrics:
+      - name: total_orders
+        type: simple
+        type_params:
+          measure: order_count
+      - name: total_lifetime_value
+        type: simple
+        type_params:
+          measure: total_lifetime_value
+      - name: avg_order_value
+        type: derived
+        type_params:
+          expr: total_lifetime_value / total_orders
