@@ -27,10 +27,10 @@ models:
         description: Valor del pedido en dólares.
         meta:
           metrics:
-            - name: sum_order_value_dollars
+            sum_order_value_dollars:
               type: sum
               description: Suma de los valores de todos los pedidos en dólares.
-            - name: avg_order_value
+            avg_order_value:
               type: average
               description: Promedio de valor por pedido no devuelto del cliente.
       - name: avg_non_returned_order_value
